@@ -1,0 +1,1006 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>course4-graded</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2020-01-22T16:50:49.263287567"/>
+	<meta name="" content=""/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<!-- Custom stylesheet, it must be in the same directory as the html file -->
+	<!-- Loading mathjax macro -->
+	<!-- Load mathjax -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<!-- MathJax configuration -->
+	<script>
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    
+
+</script>
+	<!-- End of mathjax configuration -->
+	<style type="text/css">
+		p { margin-bottom: 0.11in; color: #5a6872; font-family: "ibm-plex-sans", "Helvetica Neue for IBM", "Helvetica Neue", "Helvetica", "Arial", "Roboto", sans-serif; font-size: 11pt; font-weight: normal; line-height: 168% }
+		td p { margin-bottom: 0.11in; color: #5a6872; font-family: "ibm-plex-sans", "Helvetica Neue for IBM", "Helvetica Neue", "Helvetica", "Arial", "Roboto", sans-serif; font-size: 11pt; font-weight: normal; line-height: 168% }
+		h1 { margin-top: 0.22in; margin-bottom: 0.11in; color: #5a6872; font-family: "inherit"; font-size: 29pt; line-height: 110% }
+		pre { color: #5a6872; font-family: monospace, monospace; font-weight: normal; line-height: 168% }
+		h2 { margin-top: 0.22in; margin-bottom: 0.11in; color: #5a6872; font-family: "inherit"; font-size: 24pt; line-height: 110% }
+		h3 { margin-top: 0.22in; margin-bottom: 0.11in; color: #5a6872; font-family: "inherit"; font-size: 20pt; line-height: 110% }
+		th p { margin-bottom: 0.11in; color: #5a6872; font-family: "ibm-plex-sans", "Helvetica Neue for IBM", "Helvetica Neue", "Helvetica", "Arial", "Roboto", sans-serif; font-size: 11pt; line-height: 168% }
+		a:link { color: #337ab7; background: transparent; text-decoration: none }
+		code { font-family: monospace, monospace }
+		a:visited { color: #337ab7; background: transparent; text-decoration: none }
+	</style>
+</head>
+<body lang="en-US" text="#5a6872" link="#337ab7" vlink="#337ab7" bgcolor="#f5f7fa" dir="ltr" style="border: none; padding: 0in">
+<div id="notebook" dir="ltr">
+	<p><br/>
+<br/>
+
+	</p>
+	<div id="notebook-container" dir="ltr">
+		<p><img src="https://ibm.box.com/shared/static/ugcqz6ohbvff804xp84y4kqnvvk3bq1g.png" name="Image1" align="middle" width="200" height="200" border="0"/>
+</p>
+		<h1>Analyzing US Economic Data and Building a Dashboard 
+		</h1>
+		<h2>Description</h2>
+		<p>Extracting essential data from a dataset and displaying it is a
+		necessary part of data science; therefore individuals can make
+		correct decisions based on the data. In this assignment, you will
+		extract some essential economic indicators from some data, you will
+		then display these economic indicators in a Dashboard. You can then
+		share the dashboard via an URL.</p>
+		<p><a href="https://en.wikipedia.org/wiki/Gross_domestic_product">Gross
+		domestic product (GDP)</a> is a measure of the market value of all
+		the final goods and services produced in a period. GDP is an
+		indicator of how well the economy is doing. A drop in GDP indicates
+		the economy is producing less; similarly an increase in GDP
+		suggests the economy is performing better. In this lab, you will
+		examine how changes in GDP impact the unemployment rate. You will
+		take screen shots of every step, you will share the notebook and
+		the URL pointing to the dashboard.</p>
+		<h2>Table of Contents</h2>
+		<ul>
+			<li/>
+<p style="margin-top: 0.25in"><a href="#Section_1">Define a
+			Function that Makes a Dashboard </a>
+			</p>
+			<li/>
+<p style="margin-top: 0.25in"><a href="#Section_2">Question
+			1: Create a dataframe that contains the GDP data and display it</a>
+						</p>
+			<li/>
+<p style="margin-top: 0.25in"><a href="#Section_3">Question
+			2: Create a dataframe that contains the unemployment data and
+			display it</a> 
+			</p>
+			<li/>
+<p style="margin-top: 0.25in"><a href="#Section_4">Question
+			3: Display a dataframe where unemployment was greater than 8.5%</a>
+						</p>
+			<li/>
+<p style="margin-top: 0.25in"><a href="#Section_5">Question
+			4: Use the function make_dashboard to make a dashboard</a> 
+			</p>
+			<li/>
+<p style="margin-top: 0.25in"><a href="#Section_6"><b>(Optional
+			not marked)</b> Save the dashboard on IBM cloud and display it</a>
+						</p>
+		</ul>
+		<p style="margin-top: 0.25in">Estimated Time Needed: <strong>180
+		min</strong></p>
+		<hr/>
+
+		<h2><a name="Section_1"></a>Define Function that Makes a Dashboard 
+		</h2>
+		<p>We will import the following libraries.</p>
+		<p>In&nbsp;[1]:</p>
+		<pre>import pandas as pd
+from bokeh.plotting import figure, output_file, show,output_notebook
+output_notebook()</pre><p style="margin-bottom: 0in">
+		<a name="1001"></a>Loading BokehJS ... 
+		</p>
+		<div id="8c494fc7-3ba3-4fc5-b0b9-4f83b92f3798" dir="ltr">
+			<p style="margin-bottom: 0in"><br/>
+
+			</p>
+		</div>
+		<p><script>
+var element = $('#8c494fc7-3ba3-4fc5-b0b9-4f83b92f3798');
+
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  var force = true;
+
+  if (typeof (root._bokeh_onload_callbacks) === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+  var JS_MIME_TYPE = 'application/javascript';
+  var HTML_MIME_TYPE = 'text/html';
+  var EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  var CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) {
+    var script = document.createElement("script");
+    node.appendChild(script);
+  }
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) {
+    var cell = handle.cell;
+
+    var id = cell.output_area._bokeh_element_id;
+    var server_id = cell.output_area._bokeh_server_id;
+    // Clean up Bokeh references
+    if (id != null && id in Bokeh.index) {
+      Bokeh.index[id].model.document.clear();
+      delete Bokeh.index[id];
+    }
+
+    if (server_id !== undefined) {
+      // Clean up Bokeh references
+      var cmd = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd, {
+        iopub: {
+          output: function(msg) {
+            var id = msg.content.text.trim();
+            if (id in Bokeh.index) {
+              Bokeh.index[id].model.document.clear();
+              delete Bokeh.index[id];
+            }
+          }
+        }
+      });
+      // Destroy server and session
+      var cmd = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd);
+    }
+  }
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) {
+    var output_area = handle.output_area;
+    var output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!output.data.hasOwnProperty(EXEC_MIME_TYPE))) {
+      return
+    }
+
+    var toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    }
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+      var bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      var script_attrs = bk_div.children[0].attributes;
+      for (var i = 0; i < script_attrs.length; i++) {
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+      }
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    }
+  }
+
+  function register_renderer(events, OutputArea) {
+
+    function append_mime(data, metadata, element) {
+      // create a DOM node to render to
+      var toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      var props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    }
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    });
+  }
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) {
+    var events = require('base/js/events');
+    var OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  }
+
+  
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  var NB_LOAD_WARNING = {'data': {'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"}};
+
+  function display_loaded() {
+    var el = document.getElementById("1001");
+    if (el != null) {
+      el.textContent = "BokehJS is loading...";
+    }
+    if (root.Bokeh !== undefined) {
+      if (el != null) {
+        el.textContent = "BokehJS " + root.Bokeh.version + " successfully loaded.";
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(display_loaded, 100)
+    }
+  }
+
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) { callback() });
+    }
+    finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.info("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(js_urls, callback) {
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.log("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls == null || js_urls.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.log("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = js_urls.length;
+    for (var i = 0; i < js_urls.length; i++) {
+      var url = js_urls[i];
+      var s = document.createElement('script');
+      s.src = url;
+      s.async = false;
+      s.onreadystatechange = s.onload = function() {
+        root._bokeh_is_loading--;
+        if (root._bokeh_is_loading === 0) {
+          console.log("Bokeh: all BokehJS libraries loaded");
+          run_callbacks()
+        }
+      };
+      s.onerror = function() {
+        console.warn("failed to load library " + url);
+      };
+      console.log("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.getElementsByTagName("head")[0].appendChild(s);
+    }
+  };var element = document.getElementById("1001");
+  if (element == null) {
+    console.log("Bokeh: ERROR: autoload.js configured with elementid '1001' but no matching script tag was found. ")
+    return false;
+  }
+
+  var js_urls = ["https://cdn.pydata.org/bokeh/release/bokeh-1.0.4.min.js", "https://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.4.min.js", "https://cdn.pydata.org/bokeh/release/bokeh-tables-1.0.4.min.js", "https://cdn.pydata.org/bokeh/release/bokeh-gl-1.0.4.min.js"];
+
+  var inline_js = [
+    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+    
+    function(Bokeh) {
+      
+    },
+    function(Bokeh) {
+      console.log("Bokeh: injecting CSS: https://cdn.pydata.org/bokeh/release/bokeh-1.0.4.min.css");
+      Bokeh.embed.inject_css("https://cdn.pydata.org/bokeh/release/bokeh-1.0.4.min.css");
+      console.log("Bokeh: injecting CSS: https://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.4.min.css");
+      Bokeh.embed.inject_css("https://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.4.min.css");
+      console.log("Bokeh: injecting CSS: https://cdn.pydata.org/bokeh/release/bokeh-tables-1.0.4.min.css");
+      Bokeh.embed.inject_css("https://cdn.pydata.org/bokeh/release/bokeh-tables-1.0.4.min.css");
+    }
+  ];
+
+  function run_inline_js() {
+    
+    if ((root.Bokeh !== undefined) || (force === true)) {
+      for (var i = 0; i < inline_js.length; i++) {
+        inline_js[i].call(root, root.Bokeh);
+      }if (force === true) {
+        display_loaded();
+      }} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    } else if (force !== true) {
+      var cell = $(document.getElementById("1001")).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    }
+
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.log("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(js_urls, function() {
+      console.log("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));
+
+</script>In
+		this section, we define the function <code>make_dashboard</code>.
+		You don't have to know how the function works, you should only care
+		about the inputs. The function will produce a dashboard as well as
+		an html file. You can then use this html file to share your
+		dashboard. If you do not know what an html file is don't worry
+		everything you need to know will be provided in the lab.</p>
+		<p>In&nbsp;[2]:</p>
+		<pre>def make_dashboard(x, gdp_change, unemployment, title, file_name):
+    output_file(file_name)
+    p = figure(title=title, x_axis_label='year', y_axis_label='%')
+    p.line(x.squeeze(), gdp_change.squeeze(), color=&quot;firebrick&quot;, line_width=4, legend=&quot;% GDP change&quot;)
+    p.line(x.squeeze(), unemployment.squeeze(), line_width=4, legend=&quot;% unemployed&quot;)
+    show(p)</pre><p>
+		The dictionary <code>links</code> contain the CSV files with all
+		the data. The value for the key <code>GDP</code> is the file that
+		contains the GDP data. The value for the key <code>unemployment</code>
+		contains the unemployment data.</p>
+		<p>In&nbsp;[3]:</p>
+		<pre>links={'GDP':'https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/PY0101EN/projects/coursera_project/clean_gdp.csv',\
+       'unemployment':'https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/PY0101EN/projects/coursera_project/clean_unemployment.csv'}</pre><h3>
+		<a name="Section_2"></a>Question 1: Create a dataframe that
+		contains the GDP data and display the first five rows of the
+		dataframe.</h3>
+		<p>Use the dictionary <code>links</code> and the function
+		<code>pd.read_csv</code> to create a Pandas dataframes that
+		contains the GDP data.</p>
+		<p><b>Hint: </b><code><b>links[&quot;GDP&quot;]</b></code><b>
+		contains the path or name of the file.</b></p>
+		<p>In&nbsp;[5]:</p>
+		<pre style="margin-bottom: 0.2in">gdp = pd.read_csv(links['GDP'])</pre><p>
+		In&nbsp;[6]:</p>
+		<pre style="margin-bottom: 0.2in">gdp.head()</pre><p style="margin-bottom: 0in">
+		Out[6]:</p>
+		<table cellpadding="2" cellspacing="2">
+			<thead>
+				<tr>
+					<th style="border-top: 1px double #808080; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding: 0.02in"></th>
+					<th style="border-top: 1px double #808080; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding: 0.02in">
+						<p>date</p>
+					</th>
+					<th style="border-top: 1px double #808080; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding: 0.02in">
+						<p>level-current</p>
+					</th>
+					<th style="border-top: 1px double #808080; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding: 0.02in">
+						<p>level-chained</p>
+					</th>
+					<th style="border-top: 1px double #808080; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding: 0.02in">
+						<p>change-current</p>
+					</th>
+					<th style="border-top: 1px double #808080; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding: 0.02in">
+						<p>change-chained</p>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>0</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1948</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>274.8</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>2020.0</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>-0.7</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>-0.6</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1949</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>272.8</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>2008.9</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>10.0</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>8.7</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>2</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1950</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>300.2</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>2184.0</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>15.7</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>8.0</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>3</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1951</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>347.3</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>2360.0</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>5.9</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>4.1</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>4</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1952</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>367.7</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>2456.1</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>6.0</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>4.7</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p>Use the method <code>head()</code> to display the first five
+		rows of the GDP data, then take a screen-shot.</p>
+		<p>In&nbsp;[&nbsp;]:</p>
+		<pre style="margin-bottom: 0.2in"># Type your code here</pre><h3>
+		<a name="Section_21"></a>Question 2: Create a dataframe that
+		contains the unemployment data. Display the first five rows of the
+		dataframe. 
+		</h3>
+		<p>Use the dictionary <code>links</code> and the function
+		<code>pd.read_csv</code> to create a Pandas dataframes that
+		contains the unemployment data.</p>
+		<p>In&nbsp;[12]:</p>
+		<pre style="margin-bottom: 0.2in">unemployment0 = pd.read_csv(links['unemployment'])</pre><p>
+		Use the method <code>head()</code> to display the first five rows
+		of the GDP data, then take a screen-shot.</p>
+		<p>In&nbsp;[13]:</p>
+		<pre style="margin-bottom: 0.2in">unemployment0.head()</pre><p style="margin-bottom: 0in">
+		Out[13]:</p>
+		<table cellpadding="2" cellspacing="2">
+			<thead>
+				<tr>
+					<th style="border-top: 1px double #808080; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding: 0.02in"></th>
+					<th style="border-top: 1px double #808080; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding: 0.02in">
+						<p>date</p>
+					</th>
+					<th style="border-top: 1px double #808080; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding: 0.02in">
+						<p>unemployment</p>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>0</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1948</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>3.750000</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1949</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>6.050000</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>2</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1950</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>5.208333</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>3</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1951</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>3.283333</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>4</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1952</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>3.025000</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<h3><a name="Section_3"></a>Question 3: Display a dataframe where
+		unemployment was greater than 8.5%. Take a screen-shot.</h3>
+		<p>In&nbsp;[14]:</p>
+		<pre># Type your code here
+unemployment0[unemployment0['unemployment']&gt; 8.5]</pre><p style="margin-bottom: 0in">
+		Out[14]:</p>
+		<table cellpadding="2" cellspacing="2">
+			<thead>
+				<tr>
+					<th style="border-top: 1px double #808080; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding: 0.02in"></th>
+					<th style="border-top: 1px double #808080; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding: 0.02in">
+						<p>date</p>
+					</th>
+					<th style="border-top: 1px double #808080; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding: 0.02in">
+						<p>unemployment</p>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>34</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1982</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>9.708333</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>35</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>1983</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>9.600000</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>61</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>2009</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>9.283333</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>62</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>2010</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>9.608333</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>63</p>
+					</th>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>2011</p>
+					</td>
+					<td style="border-top: none; border-bottom: 1px double #808080; border-left: 1px double #808080; border-right: 1px double #808080; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0.02in; padding-right: 0.02in">
+						<p>8.933333</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<h3><a name="Section_4"></a>Question 4: Use the function
+		make_dashboard to make a dashboard</h3>
+		<p>In this section, you will call the function <code>make_dashboard</code>
+		, to produce a dashboard. We will use the convention of giving each
+		variable the same name as the function parameter.</p>
+		<p>Create a new dataframe with the column <code>'date'</code>
+		called <code>x</code> from the dataframe that contains the GDP
+		data.</p>
+		<p>In&nbsp;[10]:</p>
+		<pre style="margin-bottom: 0.2in">x = gdp['date']</pre><p>
+		Create a new dataframe with the column <code>'change-current'
+		</code>called <code>gdp_change</code> from the dataframe that
+		contains the GDP data.</p>
+		<p>In&nbsp;[11]:</p>
+		<pre style="margin-bottom: 0.2in">gdp_change = gdp['change-current']</pre><p>
+		Create a new dataframe with the column <code>'unemployment' </code>called
+		<code>unemployment</code> from the dataframe that contains the
+		unemployment data.</p>
+		<p>In&nbsp;[15]:</p>
+		<pre style="margin-bottom: 0.2in">unemployment = unemployment0['unemployment']</pre><p>
+		Give your dashboard a string title, and assign it to the variable
+		<code>title</code></p>
+		<p>In&nbsp;[16]:</p>
+		<pre style="margin-bottom: 0.2in">title = 'GDP vs Unemployment'</pre><p>
+		Finally, the function <code>make_dashboard</code> will output an
+		<code>.html</code> in your direictory, just like a <code>csv</code>
+		file. The name of the file is <code>&quot;index.html&quot;</code>
+		and it will be stored in the varable <code>file_name</code>.</p>
+		<p>In&nbsp;[17]:</p>
+		<pre style="margin-bottom: 0.2in">file_name = &quot;index.html&quot;</pre><p>
+		Call the function <code>make_dashboard</code> , to produce a
+		dashboard. Assign the parameter values accordingly take a the <b>,
+		take a screen shot of the dashboard and submit it</b>.</p>
+		<p>In&nbsp;[18]:</p>
+		<pre># Fill up the parameters in the following function:
+make_dashboard(x=x, gdp_change=gdp_change, unemployment=unemployment, title=title, file_name=file_name)</pre>
+		<div id="0596b9c1-b75d-4b92-9506-43177f37abd3" dir="ltr">
+			<p><br/>
+<br/>
+
+			</p>
+		</div>
+		<div id="515fb855-ea32-43b1-b3db-34485c7a7c94" dir="ltr">
+			<p><br/>
+<br/>
+
+			</p>
+		</div>
+		<h3><a name="Section_5"></a><script>
+var element = $('#515fb855-ea32-43b1-b3db-34485c7a7c94');
+(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"ff143bf1-56b7-48e9-9f75-db369c2f6c47":{"roots":{"references":[{"attributes":{"below":[{"id":"1013","type":"LinearAxis"}],"left":[{"id":"1018","type":"LinearAxis"}],"renderers":[{"id":"1013","type":"LinearAxis"},{"id":"1017","type":"Grid"},{"id":"1018","type":"LinearAxis"},{"id":"1022","type":"Grid"},{"id":"1031","type":"BoxAnnotation"},{"id":"1049","type":"Legend"},{"id":"1041","type":"GlyphRenderer"},{"id":"1054","type":"GlyphRenderer"}],"title":{"id":"1002","type":"Title"},"toolbar":{"id":"1029","type":"Toolbar"},"x_range":{"id":"1005","type":"DataRange1d"},"x_scale":{"id":"1009","type":"LinearScale"},"y_range":{"id":"1007","type":"DataRange1d"},"y_scale":{"id":"1011","type":"LinearScale"}},"id":"1003","subtype":"Figure","type":"Plot"},{"attributes":{"data_source":{"id":"1051","type":"ColumnDataSource"},"glyph":{"id":"1052","type":"Line"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1053","type":"Line"},"selection_glyph":null,"view":{"id":"1055","type":"CDSView"}},"id":"1054","type":"GlyphRenderer"},{"attributes":{"callback":null},"id":"1005","type":"DataRange1d"},{"attributes":{},"id":"1061","type":"UnionRenderers"},{"attributes":{"source":{"id":"1051","type":"ColumnDataSource"}},"id":"1055","type":"CDSView"},{"attributes":{"line_alpha":0.1,"line_color":"#1f77b4","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1040","type":"Line"},{"attributes":{},"id":"1062","type":"Selection"},{"attributes":{},"id":"1011","type":"LinearScale"},{"attributes":{"label":{"value":"% unemployed"},"renderers":[{"id":"1054","type":"GlyphRenderer"}]},"id":"1064","type":"LegendItem"},{"attributes":{"data_source":{"id":"1038","type":"ColumnDataSource"},"glyph":{"id":"1039","type":"Line"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1040","type":"Line"},"selection_glyph":null,"view":{"id":"1042","type":"CDSView"}},"id":"1041","type":"GlyphRenderer"},{"attributes":{},"id":"1072","type":"UnionRenderers"},{"attributes":{},"id":"1019","type":"BasicTicker"},{"attributes":{"source":{"id":"1038","type":"ColumnDataSource"}},"id":"1042","type":"CDSView"},{"attributes":{"overlay":{"id":"1031","type":"BoxAnnotation"}},"id":"1025","type":"BoxZoomTool"},{"attributes":{},"id":"1073","type":"Selection"},{"attributes":{"callback":null,"data":{"x":[1948,1949,1950,1951,1952,1953,1954,1955,1956,1957,1958,1959,1960,1961,1962,1963,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016],"y":{"__ndarray__":"AAAAAAAADkAzMzMzMzMYQFVVVVVV1RRARURERERECkA0MzMzMzMIQGdmZmZmZgdA3d3d3d1dFkB4d3d3d3cRQAAAAAAAgBBAMzMzMzMzEUDd3d3d3V0bQM3MzMzMzBVArKqqqqoqFkBERERERMQaQEVERERERBZAEhERERGRFkAiIiIiIqIUQImIiIiICBJAVVVVVVVVDkC5u7u7u7sOQHd3d3d3dwxA7+7u7u7uC0Dv7u7u7u4TQM3MzMzMzBdAZ2ZmZmZmFkDu7u7u7m4TQBIRERERkRZAMzMzMzPzIEDLzMzMzMweQDUzMzMzMxxAREREREREGEBnZmZmZmYXQDUzMzMzsxxAeHd3d3d3HkCqqqqqqmojQDMzMzMzMyNAiYiIiIgIHkBERERERMQcQAAAAAAAABxANTMzMzOzGEB3d3d3d/cVQIiIiIiICBVAd3d3d3d3FkBlZmZmZmYbQHh3d3d39x1AISIiIiKiG0BnZmZmZmYYQN/d3d3dXRZAIyIiIiKiFUBERERERMQTQAAAAAAAABJA393d3d3dEEC5u7u7u7sPQHd3d3d39xJAIyIiIiIiF0B4d3d3d/cXQKyqqqqqKhZAVVVVVVVVFEDv7u7u7m4SQHh3d3d3dxJAMzMzMzMzF0AREREREZEiQHd3d3d3NyNA3t3d3d3dIUBnZmZmZiYgQO/u7u7ubh1AIyIiIiKiGECamZmZmRkVQAAAAAAAgBNA","dtype":"float64","shape":[69]}},"selected":{"id":"1073","type":"Selection"},"selection_policy":{"id":"1072","type":"UnionRenderers"}},"id":"1051","type":"ColumnDataSource"},{"attributes":{"plot":null,"text":"GDP vs Unemployment"},"id":"1002","type":"Title"},{"attributes":{"dimension":1,"plot":{"id":"1003","subtype":"Figure","type":"Plot"},"ticker":{"id":"1019","type":"BasicTicker"}},"id":"1022","type":"Grid"},{"attributes":{"axis_label":"%","formatter":{"id":"1046","type":"BasicTickFormatter"},"plot":{"id":"1003","subtype":"Figure","type":"Plot"},"ticker":{"id":"1019","type":"BasicTicker"}},"id":"1018","type":"LinearAxis"},{"attributes":{},"id":"1028","type":"HelpTool"},{"attributes":{"line_color":"#1f77b4","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1052","type":"Line"},{"attributes":{"items":[{"id":"1050","type":"LegendItem"},{"id":"1064","type":"LegendItem"}],"plot":{"id":"1003","subtype":"Figure","type":"Plot"}},"id":"1049","type":"Legend"},{"attributes":{},"id":"1026","type":"SaveTool"},{"attributes":{},"id":"1044","type":"BasicTickFormatter"},{"attributes":{"callback":null,"data":{"x":[1948,1949,1950,1951,1952,1953,1954,1955,1956,1957,1958,1959,1960,1961,1962,1963,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016],"y":{"__ndarray__":"ZmZmZmZm5r8AAAAAAAAkQGZmZmZmZi9AmpmZmZmZF0AAAAAAAAAYQDMzMzMzM9M/zczMzMzMIUBmZmZmZmYWQAAAAAAAABZAAAAAAAAA+D/NzMzMzMwgQAAAAAAAABBAmpmZmZmZDUCamZmZmZkdQGZmZmZmZhZAmpmZmZmZHUDNzMzMzMwgQDMzMzMzMyNAzczMzMzMFkDNzMzMzMwiQGZmZmZmZiBAAAAAAAAAFkAAAAAAAAAhQJqZmZmZmSNAzczMzMzMJkDNzMzMzMwgQAAAAAAAACJAZmZmZmZmJkAzMzMzMzMmQAAAAAAAACpAZmZmZmZmJ0CamZmZmZkhQGZmZmZmZihAMzMzMzMzEUBmZmZmZmYhQDMzMzMzMyZAAAAAAAAAHkAAAAAAAAAWQAAAAAAAABhAmpmZmZmZH0DNzMzMzMweQM3MzMzMzBZAZmZmZmZmCkCamZmZmZkXQM3MzMzMzBRAMzMzMzMzGUAzMzMzMzMTQM3MzMzMzBZAzczMzMzMGEDNzMzMzMwWQDMzMzMzMxlAAAAAAAAAGkCamZmZmZkJQDMzMzMzMwtAMzMzMzMzE0BmZmZmZmYaQM3MzMzMzBpAAAAAAAAAGEBmZmZmZmYSQM3MzMzMzPw/zczMzMzM/L9mZmZmZmYOQJqZmZmZmQ1AzczMzMzMEEDNzMzMzMwMQJqZmZmZmRFAAAAAAAAAEECamZmZmZkFQM3MzMzMzBBA","dtype":"float64","shape":[69]}},"selected":{"id":"1062","type":"Selection"},"selection_policy":{"id":"1061","type":"UnionRenderers"}},"id":"1038","type":"ColumnDataSource"},{"attributes":{"label":{"value":"% GDP change"},"renderers":[{"id":"1041","type":"GlyphRenderer"}]},"id":"1050","type":"LegendItem"},{"attributes":{},"id":"1027","type":"ResetTool"},{"attributes":{"axis_label":"year","formatter":{"id":"1044","type":"BasicTickFormatter"},"plot":{"id":"1003","subtype":"Figure","type":"Plot"},"ticker":{"id":"1014","type":"BasicTicker"}},"id":"1013","type":"LinearAxis"},{"attributes":{"callback":null},"id":"1007","type":"DataRange1d"},{"attributes":{"line_color":"firebrick","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1039","type":"Line"},{"attributes":{},"id":"1009","type":"LinearScale"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"1023","type":"PanTool"},{"id":"1024","type":"WheelZoomTool"},{"id":"1025","type":"BoxZoomTool"},{"id":"1026","type":"SaveTool"},{"id":"1027","type":"ResetTool"},{"id":"1028","type":"HelpTool"}]},"id":"1029","type":"Toolbar"},{"attributes":{},"id":"1023","type":"PanTool"},{"attributes":{"plot":{"id":"1003","subtype":"Figure","type":"Plot"},"ticker":{"id":"1014","type":"BasicTicker"}},"id":"1017","type":"Grid"},{"attributes":{"bottom_units":"screen","fill_alpha":{"value":0.5},"fill_color":{"value":"lightgrey"},"left_units":"screen","level":"overlay","line_alpha":{"value":1.0},"line_color":{"value":"black"},"line_dash":[4,4],"line_width":{"value":2},"plot":null,"render_mode":"css","right_units":"screen","top_units":"screen"},"id":"1031","type":"BoxAnnotation"},{"attributes":{},"id":"1046","type":"BasicTickFormatter"},{"attributes":{"line_alpha":0.1,"line_color":"#1f77b4","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1053","type":"Line"},{"attributes":{},"id":"1024","type":"WheelZoomTool"},{"attributes":{},"id":"1014","type":"BasicTicker"}],"root_ids":["1003"]},"title":"Bokeh Application","version":"1.0.4"}};
+  var render_items = [{"docid":"ff143bf1-56b7-48e9-9f75-db369c2f6c47","roots":{"1003":"0596b9c1-b75d-4b92-9506-43177f37abd3"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        embed_document(root);
+        clearInterval(timer);
+      }
+      attempts++;
+      if (attempts > 100) {
+        console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        clearInterval(timer);
+      }
+    }, 10, root)
+  }
+})(window);
+
+</script><b>(Optional
+		not marked)</b>Save the dashboard on IBM cloud and display it 
+		</h3>
+		<p>From the tutorial <i>PROVISIONING AN OBJECT STORAGE INSTANCE ON
+		IBM CLOUD</i> copy the JSON object containing the credentials you
+		created. You’ll want to store everything you see in a credentials
+		variable like the one below (obviously, replace the placeholder
+		values with your own). Take special note of your <code>access_key_id</code>
+		and <code>secret_access_key</code>. <b>Do not delete </b><code><b>#
+		@hidden_cell </b></code><b>as this will not allow people to see
+		your credentials when you share your notebook. </b>
+		</p>
+		<p><code>credentials = {<br/>
+&nbsp; &quot;apikey&quot;:
+		&quot;your-api-key&quot;,<br/>
+&nbsp; &quot;cos_hmac_keys&quot;:
+		{<br/>
+&nbsp; &quot;access_key_id&quot;: &quot;your-access-key-here&quot;,
+		<br/>
+&nbsp; &quot;secret_access_key&quot;:
+		&quot;your-secret-access-key-here&quot;<br/>
+&nbsp;
+		},<br/>
+&nbsp;&quot;endpoints&quot;: &quot;your-endpoints&quot;,<br/>
+&nbsp;
+		&quot;iam_apikey_description&quot;:
+		&quot;your-iam_apikey_description&quot;,<br/>
+&nbsp;
+		&quot;iam_apikey_name&quot;: &quot;your-iam_apikey_name&quot;,<br/>
+&nbsp;
+		&quot;iam_role_crn&quot;: &quot;your-iam_apikey_name&quot;,<br/>
+&nbsp;
+		&quot;iam_serviceid_crn&quot;:
+		&quot;your-iam_serviceid_crn&quot;,<br/>
+&nbsp;&quot;resource_instance_id&quot;:
+		&quot;your-resource_instance_id&quot;<br/>
+} </code>
+		</p>
+		<p>In&nbsp;[34]:</p>
+		<pre># @hidden_cell
+#
+credentials = {
+  &quot;apikey&quot;: &quot;&quot;,
+  &quot;cos_hmac_keys&quot;: {
+    &quot;access_key_id&quot;: &quot;&quot;,
+    &quot;secret_access_key&quot;: &quot;&quot;
+  },
+  &quot;endpoints&quot;: &quot;https://control.cloud-object-storage.cloud.ibm.com/v2/endpoints&quot;,
+  &quot;iam_apikey_description&quot;: &quot;&quot;,
+  &quot;iam_apikey_name&quot;: &quot;&quot;,
+  &quot;iam_role_crn&quot;: &quot;&quot;,
+  &quot;iam_serviceid_crn&quot;: &quot;&quot;,
+  &quot;resource_instance_id&quot;: &quot;&quot;
+}</pre><p>
+		You will need the endpoint make sure the setting are the same as
+		<i>PROVISIONING AN OBJECT STORAGE INSTANCE ON IBM CLOUD </i>assign
+		the name of your bucket to the variable <code>bucket_name </code>
+		</p>
+		<p>In&nbsp;[39]:</p>
+		<pre style="margin-bottom: 0.2in">endpoint = 'https://s3.ap.cloud-object-storage.appdomain.cloud'</pre><p>
+		From the tutorial <i>PROVISIONING AN OBJECT STORAGE INSTANCE ON IBM
+		CLOUD </i>assign the name of your bucket to the variable
+		<code>bucket_name </code>
+		</p>
+		<p>In&nbsp;[36]:</p>
+		<pre style="margin-bottom: 0.2in">bucket_name = 'course4graded-donotdelete-pr-tq425af0ygqkei'</pre><p>
+		We can access IBM Cloud Object Storage with Python useing the <code>boto3</code>
+		library, which we’ll import below:</p>
+		<p>In&nbsp;[37]:</p>
+		<pre style="margin-bottom: 0.2in">import boto3</pre><p>
+		We can interact with IBM Cloud Object Storage through a <code>boto3</code>
+		resource object.</p>
+		<p>In&nbsp;[40]:</p>
+		<pre>resource = boto3.resource(
+    's3',
+    aws_access_key_id = credentials[&quot;cos_hmac_keys&quot;]['access_key_id'],
+    aws_secret_access_key = credentials[&quot;cos_hmac_keys&quot;][&quot;secret_access_key&quot;],
+    endpoint_url = endpoint,
+)</pre><p>
+		We are going to use <code>open</code> to create a file object. To
+		get the path of the file, you are going to concatenate the name of
+		the file stored in the variable <code>file_name</code>. The
+		directory stored in the variable directory using the <code>+</code>
+		operator and assign it to the variable <code>html_path</code>. We
+		will use the function <code>getcwd()</code> to find current the
+		working directory.</p>
+		<p>In&nbsp;[41]:</p>
+		<pre>import os
+
+directory = os.getcwd()
+html_path = directory + &quot;/&quot; + file_name</pre><p>
+		In&nbsp;[46]:</p>
+		<pre style="margin-bottom: 0.2in">html_path</pre><p>
+		Out[46]:</p>
+		<pre style="margin-bottom: 0.2in">'/home/dsxuser/work/index.html'</pre><p>
+		Now you must read the html file, use the function <code>f =
+		open(html_path, mode)</code> to create a file object and assign it
+		to the variable <code>f</code>. The parameter <code>file</code>
+		should be the variable <code>html_path</code>, the mode should be
+		<code>&quot;r&quot;</code> for read.</p>
+		<p>In&nbsp;[42]:</p>
+		<pre># Type your code here
+f = open(html_path, 'r')</pre><p>
+		To load your dataset into the bucket we will use the method
+		<code>put_object</code>, you must set the parameter name to the
+		name of the bucket, the parameter <code>Key</code> should be the
+		name of the HTML file and the value for the parameter Body should
+		be set to <code>f.read()</code>.</p>
+		<p>In&nbsp;[47]:</p>
+		<pre># Fill up the parameters in the following function:
+resource.Bucket(name=bucket_name).put_object(Key=html_path, Body=f.read())
+<font color="#e75c58">---------------------------------------------------------------------------</font>
+<font color="#e75c58">NoSuchKey</font>                                 Traceback (most recent call last)
+<font color="#00a250">&lt;ipython-input-47-21c206b1d4ec&gt;</font> in <font color="#60c6c8">&lt;module&gt;</font>
+      1 <font color="#e75c58"># Fill up the parameters in the following function:</font>
+<font color="#00a250">----&gt; 2</font><font color="#e75c58"> </font>resource<font color="#208ffb">.</font>Bucket<font color="#208ffb">(</font>name<font color="#208ffb">=</font>bucket_name<font color="#208ffb">).</font>put_object<font color="#208ffb">(</font>Key<font color="#208ffb">=</font>html_path<font color="#208ffb">,</font> Body<font color="#208ffb">=</font>f<font color="#208ffb">.</font>read<font color="#208ffb">())</font>
+
+<font color="#00a250">/opt/conda/envs/Python36/lib/python3.6/site-packages/boto3/resources/factory.py</font> in <font color="#60c6c8">do_action</font><font color="#208ffb">(self, *args, **kwargs)</font>
+    518             <font color="#e75c58"># instance via ``self``.</font>
+    519             <font color="#00a250">def</font> do_action<font color="#208ffb">(</font>self<font color="#208ffb">,</font> <font color="#208ffb">*</font>args<font color="#208ffb">,</font> <font color="#208ffb">**</font>kwargs<font color="#208ffb">):</font>
+<font color="#00a250">--&gt; 520</font><font color="#e75c58">                 </font>response <font color="#208ffb">=</font> action<font color="#208ffb">(</font>self<font color="#208ffb">,</font> <font color="#208ffb">*</font>args<font color="#208ffb">,</font> <font color="#208ffb">**</font>kwargs<font color="#208ffb">)</font>
+    521 
+    522                 <font color="#00a250">if</font> hasattr<font color="#208ffb">(</font>self<font color="#208ffb">,</font> <font color="#208ffb">'load'):</font>
+
+<font color="#00a250">/opt/conda/envs/Python36/lib/python3.6/site-packages/boto3/resources/action.py</font> in <font color="#60c6c8">__call__</font><font color="#208ffb">(self, parent, *args, **kwargs)</font>
+     81                     operation_name, params)
+     82 
+<font color="#00a250">---&gt; 83</font><font color="#e75c58">         </font>response <font color="#208ffb">=</font> getattr<font color="#208ffb">(</font>parent<font color="#208ffb">.</font>meta<font color="#208ffb">.</font>client<font color="#208ffb">,</font> operation_name<font color="#208ffb">)(**</font>params<font color="#208ffb">)</font>
+     84 
+     85         logger<font color="#208ffb">.</font>debug<font color="#208ffb">('Response: %r',</font> response<font color="#208ffb">)</font>
+
+<font color="#00a250">/opt/conda/envs/Python36/lib/python3.6/site-packages/botocore/client.py</font> in <font color="#60c6c8">_api_call</font><font color="#208ffb">(self, *args, **kwargs)</font>
+    355                     &quot;%s() only accepts keyword arguments.&quot; % py_operation_name)
+    356             <font color="#e75c58"># The &quot;self&quot; in this scope is referring to the BaseClient.</font>
+<font color="#00a250">--&gt; 357</font><font color="#e75c58">             </font><font color="#00a250">return</font> self<font color="#208ffb">.</font>_make_api_call<font color="#208ffb">(</font>operation_name<font color="#208ffb">,</font> kwargs<font color="#208ffb">)</font>
+    358 
+    359         _api_call<font color="#208ffb">.</font>__name__ <font color="#208ffb">=</font> str<font color="#208ffb">(</font>py_operation_name<font color="#208ffb">)</font>
+
+<font color="#00a250">/opt/conda/envs/Python36/lib/python3.6/site-packages/botocore/client.py</font> in <font color="#60c6c8">_make_api_call</font><font color="#208ffb">(self, operation_name, api_params)</font>
+    659             error_code <font color="#208ffb">=</font> parsed_response<font color="#208ffb">.</font>get<font color="#208ffb">(&quot;Error&quot;,</font> <font color="#208ffb">{}).</font>get<font color="#208ffb">(&quot;Code&quot;)</font>
+    660             error_class <font color="#208ffb">=</font> self<font color="#208ffb">.</font>exceptions<font color="#208ffb">.</font>from_code<font color="#208ffb">(</font>error_code<font color="#208ffb">)</font>
+<font color="#00a250">--&gt; 661</font><font color="#e75c58">             </font><font color="#00a250">raise</font> error_class<font color="#208ffb">(</font>parsed_response<font color="#208ffb">,</font> operation_name<font color="#208ffb">)</font>
+    662         <font color="#00a250">else</font><font color="#208ffb">:</font>
+    663             <font color="#00a250">return</font> parsed_response
+
+<font color="#e75c58">NoSuchKey</font>: An error occurred (NoSuchKey) when calling the PutObject operation: The specified key does not exist.</pre><p>
+		In the dictionary <code>Params</code> provide the bucket name as
+		the value for the key <i>'Bucket'</i>. Also for the value of the
+		key <i>'Key'</i> add the name of the <code>html</code> file, both
+		values should be strings.</p>
+		<p>In&nbsp;[&nbsp;]:</p>
+		<pre># Fill in the value for each key
+# Params = {'Bucket': ,'Key': }</pre><p>
+		The following lines of code will generate a URL to share your
+		dashboard. The URL only last seven days, but don't worry you will
+		get full marks if the URL is visible in your notebook.</p>
+		<p>In&nbsp;[&nbsp;]:</p>
+		<pre>import sys
+time = 7*24*60**2
+client = boto3.client(
+    's3',
+    aws_access_key_id = credentials[&quot;cos_hmac_keys&quot;]['access_key_id'],
+    aws_secret_access_key = credentials[&quot;cos_hmac_keys&quot;][&quot;secret_access_key&quot;],
+    endpoint_url=endpoint,
+
+)
+url = client.generate_presigned_url('get_object',Params=Params,ExpiresIn=time)
+print(url)</pre><h2>
+		<a name="Section_51"></a>How to submit 
+		</h2>
+		<p>Once you complete your notebook you will have to share it to be
+		marked. Select the icon on the top right a marked in red in the
+		image below, a dialogue box should open, select the option
+		all&nbsp;content excluding sensitive code cells.</p>
+		<p><img src="https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/PY0101EN/projects/EdX/ReadMe%20files/share_noteook1.png" name="Image2" alt="share notebook" align="bottom" width="700" height="440" border="0"/>
+</p>
+		<p>You can then share the notebook&nbsp; via a&nbsp; URL by
+		scrolling down as shown in the following image:</p>
+		<p align="center"><img src="https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/PY0101EN/projects/EdX/ReadMe%20files/link2.png" name="Image3" alt="share notebook" align="bottom" width="350" height="308" border="0"/>
+
+				</p>
+		<hr/>
+
+		<p>Copyright © 2019 IBM Developer Skills Network. This notebook
+		and its source code are released under the terms of the <a href="https://cognitiveclass.ai/mit-license/">MIT
+		License</a>.</p>
+		<h2>About the Authors:</h2>
+		<p><a href="https://www.linkedin.com/in/joseph-s-50398b136/">Joseph
+		Santarcangelo</a> has a PhD in Electrical Engineering, his research
+		focused on using machine learning, signal processing, and computer
+		vision to determine how videos impact human cognition. Joseph has
+		been working for IBM since he completed his PhD.</p>
+		<p>Other contributors: <a href="https://www.linkedin.com/in/yi-leng-yao-84451275/">Yi
+		leng Yao</a>, <a href="www.linkedin.com/in/jiahui-mavis-zhou-a4537814a">Mavis
+		Zhou</a> 
+		</p>
+		<h2>References :</h2>
+		<ul>
+			<p>1) <a href="https://research.stlouisfed.org/">Economic Research
+			at the St. Louis Fed </a>:<a href="https://fred.stlouisfed.org/series/UNRATE/">
+			Civilian Unemployment Rate</a> 
+			</p>
+			<p>2) <a href="https://github.com/datasets">Data Packaged Core
+			Datasets </a>
+			</p>
+			<p>&lt;/ul&gt; &lt;/div&gt;</p>
+		</ul>
+	</div>
+</div>
+<p><br/>
+<br/>
+
+</p>
+</body>
+</html>
